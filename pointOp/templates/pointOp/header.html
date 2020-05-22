@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Arvind</title>
+	<meta charset="utf-8" />
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'pointOp/css/bootstrap.min.css' %}" type = "text/css"/>
+	<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+	
+	<style type="text/css">
+		html,
+		body {
+		  height:100%
+		}
+	</style>
+</head>
+
+<body class="body" style="background-color:#f6f6f6">
+	<header>
+		<div class="container-fluid" style='margin-left:15px'>
+			<p><a href="/" target="blank">Original</a> | <a href="/thresh/" target="blank">Thresholding</a> | <a href="/contrast/" target="blank">Contrast Stretching</a> | <a href="/histogram/" target="blank">Histogram Equalizer</a> | <a href="/logarithm/" target="blank">Logarithm operator</a>  | <a href="/raiz/" target="blank"> Raiz Operator</a> | <a href="/exponential/" target="blank"> Exponential Operator</a> | <a href="/raize/" target="blank"> Raize Power Operator</a>   </p>
+		</div>
+ 	</header>
+
+ 	<div class="card shadow mb-4">
+              <div class="card-header py-12">
+                <h6 class="m-4 font-weight-bold text-primary"><i class="fas fa-fw fa-arrow-circle-up"></i> subir Imagen</h6>
+              </div>
+              <div class="card-body">
+                <section>
+ 	<form action="" method="POST" enctype="multipart/form-data">
+ 	{% csrf_token %}
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <div class="preview-zone hidden">
+                              <div class="box box-solid">
+                                <div class="box-header with-border">
+                                    <div class="box-tools pull-right">
+                                    </div>
+                                  </div>
+                                <div class="box-body"></div>
+                              </div>
+                            </div>
+                            <div class="dropzone-wrapper">
+                            <div class="dropzone-desc">
+                              <i class="fas fa-fw fa-upload"></i>
+			      <p rel="stylesheet"> {{ pageTitle }}</p>
+                            </div>
+                            <input type="file" name="imagefile" class="dropzone" style="padding: 20px;">
+                          </div>
+			  <!--thresholding-->
+			  {% if pageStatus == 1 %}
+			  	<p> se feliz </p>
+			  {% endif %}
+
+			  <!--contrastStretching-->
+			  {% if pageStatus == 2%}
+			  <input type="number" name="limit" placeholder="limit" style="padding: 5px;" maxlength=3>
+			  {% endif %}
+			  <!--histogram equalizer-->
+			  {% if pageStatus == 3 %}
+			  	<p> se feliz </p>
+			  {% endif %}
+
+			  <!--logarithm-->
+			  {% if pageStatus == 4 %}
+			  <input type="number" name="limit" placeholder="limit" style="padding: 5px;">	
+			  {% endif %}
+
+			  {% if pageStatus == 5 %}
+			  <input type="number" name="limit" placeholder="limit" style="padding: 5px;">
+			  {% endif %}
+
+                        </div>
+                      </div>
+                    </div>
+            		</div>
+                      <div class="row">
+                        <div class="col-md-5">
+                          <button type="submit" class="btn btn-primary pull-right">CargarImagen</button>
+                        </div>
+                      </div>
+                    </div>    
+                     
+    </form>
+    </section>
+              </div>
+          </div>
+	<!--aqui termina-->
+	          <div class="row">
+
+            <div class="col-lg-6">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-primary">Imagen Original</h6>
+                </div>
+                <div class="card-body">
+                  <div style="padding: 20px;">
+                    <center>
+			    <img src = "{% static displayFile %}" class="responsive-img" alt="Imagen Original" style="max-height: 100%; max-width: 100%">
+                    </center>
+                  </div>
+                  <div class="my-2"></div>
+                  <a href="{% static displayFile %}" class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-download"></i>
+                    </span>
+                    <span class="text">Descargar IMagen</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-lg-6">
+
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+			<h6 class="m-0 font-weight-bold text-primary"> imagen con {{ pageTitle}}</h6>
+                </div>
+                <div class="card-body">
+                  <div style="padding: 20px;">
+                    <center>
+			    <img src="{% static displayFileMod %}" alt="Imagen con {{ pageTitle}}" style="max-height: 100%; max-width: 100%">
+                    </center>
+                  </div>
+                  <div class="my-2"></div>
+                  <a href="{% static displayFileMod %}" class="btn btn-success btn-icon-split">
+                   <span class="icon text-white-50">
+                      <i class="fas fa-download"></i>
+                    </span>
+                    <span class="text">Descargar Imagen</span>
+                  </a>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+	
+</body>
+
+</html>
