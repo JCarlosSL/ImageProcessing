@@ -10,5 +10,6 @@ urlpatterns = [
     path(r'raiz/',views.raizoperator, name= 'raizOperator'),
     path(r'exponential/',views.exponentialoperator, name= 'exponentialOperator'),
     path(r'raize/',views.raizepoweroperator, name= 'Raize Power Operator'),
+    path(r'cascade/',views.cascade, name= 'Cascade'),
     
 ]

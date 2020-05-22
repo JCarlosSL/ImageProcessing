@@ -11,15 +11,15 @@
 	<style type="text/css">
 		html,
 		body {
-		  height:100%
+		  height:80%
 		}
 	</style>
 </head>
 
 <body class="body" style="background-color:#1e1e1e">
 	<header>
-		<div class="container-fluid" style='margin-left:15px'>
-			<p><a href="/" target="blank">Original</a> | <a href="/thresh/" target="blank">Thresholding</a> | <a href="/contrast/" target="blank">Contrast Stretching</a> | <a href="/histogram/" target="blank">Histogram Equalizer</a> | <a href="/logarithm/" target="blank">Logarithm operator</a>  | <a href="/raiz/" target="blank"> Raiz Operator</a> | <a href="/exponential/" target="blank"> Exponential Operator</a> | <a href="/raize/" target="blank"> Raize Power Operator</a>   </p>
+		<div class="container-fluid" style='margin-left:20px'>
+			<p><a href="/" target="blank">Original</a> | <a href="/thresh/" target="blank">Thresholding</a> | <a href="/contrast/" target="blank">Contrast Stretching</a> | <a href="/histogram/" target="blank">Histogram Equalizer</a> | <a href="/logarithm/" target="blank">Logarithm operator</a>  | <a href="/raiz/" target="blank"> Raiz Operator</a> | <a href="/exponential/" target="blank"> Exponential Operator</a> | <a href="/raize/" target="blank"> Raize Power Operator</a> | <a href="/cascade/" target="blank"> Cascade</a>  </p>
 		</div>
  	</header>
 
@@ -53,13 +53,13 @@
                           </div>
 			  <!--thresholding-->
 			  {% if pageStatus == 1 %}
-			  <input type="number" name="limit_a" placeholder="limit_a" style="padding: 5px;" maxlength=3>
-			  <input type="number" name="limit_b" placeholder="limit_b" style="padding: 5px;" maxlength=3>
+			  <input type="number" name="limit_a" placeholder="limit_a" style="padding: 2px;" maxlength=3>
+			  <input type="number" name="limit_b" placeholder="limit_b" style="padding: 2px;" maxlength=3>
 			  {% endif %}
 
 			  <!--contrastStretching-->
 			  {% if pageStatus == 2%}
-			  <input type="number" name="limit" placeholder="limit" style="padding: 5px;" maxlength=3>
+			  <input type="number" name="limit" placeholder="limit" style="padding: 2px;" maxlength=3>
 			  {% endif %}
 			  <!--histogram equalizer-->
 			  {% if pageStatus == 3 %}
@@ -68,15 +68,25 @@
 
 
                         </div>
+                        {% if pageStatus == 4%}
+                        <input type="radio" name="thresh" >thresh
+                        <input type="radio" name="contrast" >contrat
+                        <input type="radio" name="Histogram" >Histogram
+                        <input type="radio" name="Logarithm" >Logarithm
+                        <input type="radio" name="Raiz" >Raiz
+                        <input type="radio" name="Exponential" >Exponential
+                        <input type="radio" name="Raise to Power" >Raise to power
+                        
+                        {% endif %}
                       </div>
                     </div>
             		</div>
-			<div class="row">
-				<div class="col-md-5">
+				<div class="row">
+					<div class="col-md-5">
                           <button type="submit"  style="background-color:#444444" class="btn btn-primary pull-right">CargarImagen</button>
+					</div>
 				</div>
-			</div>
-                    </div>    
+         </div>    
                      
     </form>
     </section>

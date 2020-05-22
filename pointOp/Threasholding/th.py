@@ -9,10 +9,10 @@ class Threshold:
         self.r = 255
 
     def thFunction(self, fxy):
-        if(fxy < self.r and fxy > self.l):
-            return 0
-        else:
+        if( self.l <= fxy and fxy <= self.r):
             return 255
+        else:
+            return 0
 
     def thresholding(self,left=0,right=255):
         self.l = left

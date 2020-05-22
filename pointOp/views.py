@@ -28,9 +28,6 @@ def index(request):
         img = cv2.imread(displayFile)
         cv2.imwrite("pointOp/static/media/"+name,img)
 
-        #img_gray = cv2.imread(displayFile,0)
-        #cv2.imwrite("pointOp/static/media/gray_"+name,img_gray)
-
         displayFile = url
         displayFileMod = url #"/media/gray_"+name
         return render(request, 'pointOp/home.html', {
@@ -234,8 +231,8 @@ def exponentialoperator(request):
         cv2.imwrite("pointOp/static/media/"+name,img)
         """exponential operator"""
         expo = POO(img)
-        b=0.03
-        c=3
+        b=1.005
+        c=5
         if request.POST['limit_a']:
             b=request.POST['limit_a']
         if request.POST['limit_b']:
@@ -271,8 +268,8 @@ def raizepoweroperator(request):
 
         """raize power"""
         rai = POO(img)
-        r=0
-        c=0
+        r=1.005
+        c=0.05
         if request.POST['limit_a']:
             r = request.POST['limit_a']
         if request.POST['limit_b']:
@@ -297,28 +294,34 @@ def raizepoweroperator(request):
 
 def cascade(request):
     pageTitle = 'cascade Operation'
-    pageStatus = 8
+    pageStatus = 4
     if request.method == 'POST':
-        uploaded_file = request.FILES['imagefile']
-        fs = FileSystemStorage()
-        name = fs.save(uploaded_file.name, uploaded_file)
-        url = fs.url(name)
-        displayFile = os.path.join("/home/carlos/Documentos/ImageProcessing"+url)
-        img = cv2.imread(displayFile)
-        cv2.imwrite("pointOp/static/media/"+name, img)
+        if request.FILES['imagefile']:
+            uploaded_file = request.FILES['imagefile']
+            fs = FileSystemStorage()
+            name = fs.save(uploaded_file.name, uploaded_file)
+            url = fs.url(name)
+            displayFile = os.path.join("/home/carlos/Documentos/ImageProcessing"+url)
+            img = cv2.imread(displayFile,0)
+            cv2.imwrite("pointOp/static/media/"+name, img)
 
-        """cascade functioni"""
+            newimg = None
+            if request.POST['thresh']:
+                th=TH(img)
+                newimg=th.thresholding()
 
-        imgcas=img
-        cv2.imwrite("pointOp/static/media/cascade_"+name,imgcas)
-        displayFile = url
-        displayfileMod = "/media/_cascade_"+name
-        return render(request, 'pointOp/home.html',{
-            'pageStatus':pageStatus,
-            'displayFileMod':displayFileMod,
-            'pageTitle':pageTitle,
-            'displayFile':displayFile,
-            })
+
+            imgcas=img
+            cv2.imwrite("pointOp/static/media/cascade_"+name,newimg)
+            displayFile = url
+            displayFileMod = "/media/_cascade_"+name
+            return render(request, 'pointOp/home.html',{
+                'pageStatus':pageStatus,
+                'displayFileMod':displayFileMod,
+                'pageTitle':pageTitle,
+                'displayFile':displayFile,
+                })
+
     return render(request,'pointOp/home.html',{
         'pageStatus':pageStatus,
         'pageTitle':pageTitle,
