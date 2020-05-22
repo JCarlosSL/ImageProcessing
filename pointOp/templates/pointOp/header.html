@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Arvind</title>
+	<title>Procesamiento de Imagenes</title>
 	<meta charset="utf-8" />
 	{% load static %}
 	<link rel="stylesheet" href="{% static 'pointOp/css/bootstrap.min.css' %}" type = "text/css"/>
@@ -16,7 +16,7 @@
 	</style>
 </head>
 
-<body class="body" style="background-color:#f6f6f6">
+<body class="body" style="background-color:#1e1e1e">
 	<header>
 		<div class="container-fluid" style='margin-left:15px'>
 			<p><a href="/" target="blank">Original</a> | <a href="/thresh/" target="blank">Thresholding</a> | <a href="/contrast/" target="blank">Contrast Stretching</a> | <a href="/histogram/" target="blank">Histogram Equalizer</a> | <a href="/logarithm/" target="blank">Logarithm operator</a>  | <a href="/raiz/" target="blank"> Raiz Operator</a> | <a href="/exponential/" target="blank"> Exponential Operator</a> | <a href="/raize/" target="blank"> Raize Power Operator</a>   </p>
@@ -25,11 +25,11 @@
 
  	<div class="card shadow mb-4">
               <div class="card-header py-12">
-                <h6 class="m-4 font-weight-bold text-primary"><i class="fas fa-fw fa-arrow-circle-up"></i> subir Imagen</h6>
+                <h2 class="m-4 font-weight-bold"><i class="fas fa-fw fa-arrow-circle-up"></i> Procesamiento de Imagenes</h2>
               </div>
               <div class="card-body">
                 <section>
- 	<form action="" method="POST" enctype="multipart/form-data">
+ 	<form action="" method="POST" enctype="multipart/form-data" style="background-color:#555555">
  	{% csrf_token %}
                     <div class="container">
                       <div class="row">
@@ -49,11 +49,12 @@
                               <i class="fas fa-fw fa-upload"></i>
 			      <p rel="stylesheet"> {{ pageTitle }}</p>
                             </div>
-                            <input type="file" name="imagefile" class="dropzone" style="padding: 20px;">
+                            <input type="file" name="imagefile" class="dropzone" style="background:#534950">
                           </div>
 			  <!--thresholding-->
 			  {% if pageStatus == 1 %}
-			  	<p> se feliz </p>
+			  <input type="number" name="limit_a" placeholder="limit_a" style="padding: 5px;" maxlength=3>
+			  <input type="number" name="limit_b" placeholder="limit_b" style="padding: 5px;" maxlength=3>
 			  {% endif %}
 
 			  <!--contrastStretching-->
@@ -65,24 +66,16 @@
 			  	<p> se feliz </p>
 			  {% endif %}
 
-			  <!--logarithm-->
-			  {% if pageStatus == 4 %}
-			  <input type="number" name="limit" placeholder="limit" style="padding: 5px;">	
-			  {% endif %}
-
-			  {% if pageStatus == 5 %}
-			  <input type="number" name="limit" placeholder="limit" style="padding: 5px;">
-			  {% endif %}
 
                         </div>
                       </div>
                     </div>
             		</div>
-                      <div class="row">
-                        <div class="col-md-5">
-                          <button type="submit" class="btn btn-primary pull-right">CargarImagen</button>
-                        </div>
-                      </div>
+			<div class="row">
+				<div class="col-md-5">
+                          <button type="submit"  style="background-color:#444444" class="btn btn-primary pull-right">CargarImagen</button>
+				</div>
+			</div>
                     </div>    
                      
     </form>

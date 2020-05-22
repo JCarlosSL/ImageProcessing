@@ -12,15 +12,15 @@ import cv2
 from .HistogramEqual.HistogramEqual import HistogramEqual as HE
 from .Lab2.contrastStretching import ConstS as CS
 from .LogarithmOperator.pointOperator import pointOperator as PO
+from .Threasholding.th import Threshold as TH
+from .OperadorExponencial.OpExp import pointOperator as POO
 # Create your views here.
 
 def index(request):
-    indexActive = 'active'
-    pageTitle = 'Greyscale'
-    pageStatus = 1
+    pageTitle = 'Imagen Original'
+    pageStatus = 0
     if request.method == 'POST':
         uploaded_file = request.FILES['imagefile']
-        pageStatus = 0
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         url = fs.url(name)
@@ -28,41 +28,48 @@ def index(request):
         img = cv2.imread(displayFile)
         cv2.imwrite("pointOp/static/media/"+name,img)
 
-        img_gray = cv2.imread(displayFile,0)
-        cv2.imwrite("pointOp/static/media/gray_"+name,img_gray)
+        #img_gray = cv2.imread(displayFile,0)
+        #cv2.imwrite("pointOp/static/media/gray_"+name,img_gray)
 
         displayFile = url
-        displayFileMod = "/media/gray_"+name
+        displayFileMod = url #"/media/gray_"+name
         return render(request, 'pointOp/home.html', {
             'pageStatus':pageStatus,
             'displayFileMod':displayFileMod,
             'pageTitle':pageTitle,
-            'indexActive':indexActive,
             'displayFile':displayFile
             })
     return render(request, 'pointOp/home.html', {
         'pageStatus':pageStatus,
         'pageTitle':pageTitle,
-        'indexActive':indexActive
         })
 
 
 def thresholding(request):
-    indexActive = 'active'
     pageTitle = 'thresholding'
     pageStatus = 1
     if request.method == 'POST':
         uploaded_file = request.FILES['imagefile']
-        pageStatus = 1
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         url = fs.url(name)
         displayFile = os.path.join("/home/carlos/Documentos/ImageProcessing"+url)
-        img = cv2.imread(displayFile)
+        img = cv2.imread(displayFile,0)
         cv2.imwrite("pointOp/static/media/"+name,img)
 
-        img_gray = cv2.imread(displayFile)
-        cv2.imwrite("pointOp/static/media/tresh_"+name,img_gray)
+        """threasholding"""
+        thres = TH(img)
+        l=0
+        r=255
+        if request.POST['limit_a']:
+            l=int(request.POST['limit_a'])
+        if request.POST['limit_b']:
+            r=int(request.POST['limit_b'])
+
+        newimg = thres.thresholding(l,r)
+
+
+        cv2.imwrite("pointOp/static/media/tresh_"+name,newimg)
 
         displayFile = url
         displayFileMod = "/media/tresh_"+name
@@ -70,22 +77,18 @@ def thresholding(request):
             'pageStatus':pageStatus,
             'displayFileMod':displayFileMod,
             'pageTitle':pageTitle,
-            'indexActive':indexActive,
             'displayFile':displayFile
             })
     return render(request, 'pointOp/home.html', {
         'pageStatus':pageStatus,
         'pageTitle':pageTitle,
-        'indexActive':indexActive
         })
         
 def contraststretching(request):
-    indexActive = 'active'
     pageTitle = 'Contrast Stretching'
     pageStatus = 2
     if request.method == 'POST':
         uploaded_file = request.FILES['imagefile']
-        pageStatus = 2
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         url = fs.url(name)
@@ -101,7 +104,6 @@ def contraststretching(request):
         contrast.CDlimit(d)
         newimg = contrast.Stretch()
 
-        #img_gray = cv2.imread(displayFile)
         cv2.imwrite("pointOp/static/media/contrast_"+name,newimg)
 
         displayFile = url
@@ -110,22 +112,18 @@ def contraststretching(request):
             'pageStatus':pageStatus,
             'displayFileMod':displayFileMod,
             'pageTitle':pageTitle,
-            'indexActive':indexActive,
             'displayFile':displayFile
             })
     return render(request, 'pointOp/home.html', {
         'pageStatus':pageStatus,
         'pageTitle':pageTitle,
-        'indexActive':indexActive
         })
         
 def histogramequalizer(request):
-    indexActive = 'active'
     pageTitle = 'Histogram Equalizer'
     pageStatus = 3
     if request.method == 'POST':
         uploaded_file = request.FILES['imagefile']
-        pageStatus = 3
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         url = fs.url(name)
@@ -138,7 +136,6 @@ def histogramequalizer(request):
 
         newimg = h.Equalization()
 
-        #img_gray = cv2.imread(displayFile)
         cv2.imwrite("pointOp/static/media/hist_"+name,newimg)
 
         displayFile = url
@@ -147,23 +144,19 @@ def histogramequalizer(request):
             'pageStatus':pageStatus,
             'displayFileMod':displayFileMod,
             'pageTitle':pageTitle,
-            'indexActive':indexActive,
             'displayFile':displayFile
             })
     return render(request, 'pointOp/home.html', {
         'pageStatus':pageStatus,
         'pageTitle':pageTitle,
-        'indexActive':indexActive
         })
         
         
 def logarithmoperator(request):
-    indexActive = 'active'
     pageTitle = 'Logarithm Operator'
-    pageStatus = 4
+    pageStatus = 2
     if request.method == 'POST':
         uploaded_file = request.FILES['imagefile']
-        pageStatus = 4
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         url = fs.url(name)
@@ -178,7 +171,6 @@ def logarithmoperator(request):
         logop = PO(img)
         newimg = logop.logarithmOperator(d)
 
-        #img_gray = cv2.imread(displayFile)
         cv2.imwrite("pointOp/static/media/log_"+name,newimg)
 
         displayFile = url
@@ -187,22 +179,18 @@ def logarithmoperator(request):
             'pageStatus':pageStatus,
             'displayFileMod':displayFileMod,
             'pageTitle':pageTitle,
-            'indexActive':indexActive,
             'displayFile':displayFile
             })
     return render(request, 'pointOp/home.html', {
         'pageStatus':pageStatus,
         'pageTitle':pageTitle,
-        'indexActive':indexActive
         })
         
 def raizoperator(request):
-    indexActive = 'active'
     pageTitle = 'Raiz Operator'
-    pageStatus = 5
+    pageStatus = 2
     if request.method == 'POST':
         uploaded_file = request.FILES['imagefile']
-        pageStatus = 5
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         url = fs.url(name)
@@ -226,31 +214,35 @@ def raizoperator(request):
             'pageStatus':pageStatus,
             'displayFileMod':displayFileMod,
             'pageTitle':pageTitle,
-            'indexActive':indexActive,
             'displayFile':displayFile
             })
     return render(request, 'pointOp/home.html', {
         'pageStatus':pageStatus,
         'pageTitle':pageTitle,
-        'indexActive':indexActive
         })
         
 def exponentialoperator(request):
-    indexActive = 'active'
     pageTitle = 'Exponential Operator'
-    pageStatus = 6
+    pageStatus = 1
     if request.method == 'POST':
         uploaded_file = request.FILES['imagefile']
-        pageStatus = 6
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         url = fs.url(name)
         displayFile = os.path.join("/home/carlos/Documentos/ImageProcessing"+url)
-        img = cv2.imread(displayFile)
+        img = cv2.imread(displayFile,0)
         cv2.imwrite("pointOp/static/media/"+name,img)
+        """exponential operator"""
+        expo = POO(img)
+        b=0.03
+        c=3
+        if request.POST['limit_a']:
+            b=request.POST['limit_a']
+        if request.POST['limit_b']:
+            c=request.POST['limit_b']
 
-        img_gray = cv2.imread(displayFile)
-        cv2.imwrite("pointOp/static/media/expo_"+name,img_gray)
+        newimg = expo.expoOperator(b,c)
+        cv2.imwrite("pointOp/static/media/expo_"+name,newimg)
 
         displayFile = url
         displayFileMod = "/media/expo_"+name
@@ -258,31 +250,37 @@ def exponentialoperator(request):
             'pageStatus':pageStatus,
             'displayFileMod':displayFileMod,
             'pageTitle':pageTitle,
-            'indexActive':indexActive,
             'displayFile':displayFile
             })
     return render(request, 'pointOp/home.html', {
         'pageStatus':pageStatus,
         'pageTitle':pageTitle,
-        'indexActive':indexActive
         })
         
 def raizepoweroperator(request):
-    indexActive = 'active'
     pageTitle = 'Raize Power Operator'
-    pageStatus = 7
+    pageStatus = 1
     if request.method == 'POST':
         uploaded_file = request.FILES['imagefile']
-        pageStatus = 7
         fs = FileSystemStorage()
         name = fs.save(uploaded_file.name, uploaded_file)
         url = fs.url(name)
         displayFile = os.path.join("/home/carlos/Documentos/ImageProcessing"+url)
-        img = cv2.imread(displayFile)
+        img = cv2.imread(displayFile,0)
         cv2.imwrite("pointOp/static/media/"+name,img)
 
-        img_gray = cv2.imread(displayFile)
-        cv2.imwrite("pointOp/static/media/raize_"+name,img_gray)
+        """raize power"""
+        rai = POO(img)
+        r=0
+        c=0
+        if request.POST['limit_a']:
+            r = request.POST['limit_a']
+        if request.POST['limit_b']:
+            c = request.POST['limit_b']
+        
+        newimg = rai.raiseOperator(r,c)
+        
+        cv2.imwrite("pointOp/static/media/raize_"+name,newimg)
 
         displayFile = url
         displayFileMod = "/media/raize_"+name
@@ -290,11 +288,38 @@ def raizepoweroperator(request):
             'pageStatus':pageStatus,
             'displayFileMod':displayFileMod,
             'pageTitle':pageTitle,
-            'indexActive':indexActive,
             'displayFile':displayFile
             })
     return render(request, 'pointOp/home.html', {
         'pageStatus':pageStatus,
         'pageTitle':pageTitle,
-        'indexActive':indexActive
+        })
+
+def cascade(request):
+    pageTitle = 'cascade Operation'
+    pageStatus = 8
+    if request.method == 'POST':
+        uploaded_file = request.FILES['imagefile']
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name, uploaded_file)
+        url = fs.url(name)
+        displayFile = os.path.join("/home/carlos/Documentos/ImageProcessing"+url)
+        img = cv2.imread(displayFile)
+        cv2.imwrite("pointOp/static/media/"+name, img)
+
+        """cascade functioni"""
+
+        imgcas=img
+        cv2.imwrite("pointOp/static/media/cascade_"+name,imgcas)
+        displayFile = url
+        displayfileMod = "/media/_cascade_"+name
+        return render(request, 'pointOp/home.html',{
+            'pageStatus':pageStatus,
+            'displayFileMod':displayFileMod,
+            'pageTitle':pageTitle,
+            'displayFile':displayFile,
+            })
+    return render(request,'pointOp/home.html',{
+        'pageStatus':pageStatus,
+        'pageTitle':pageTitle,
         })
