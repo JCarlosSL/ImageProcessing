@@ -11,5 +11,6 @@ urlpatterns = [
     path(r'exponential/',views.exponentialoperator, name= 'exponentialOperator'),
     path(r'raize/',views.raizepoweroperator, name= 'Raize Power Operator'),
     path(r'cascade/',views.cascade, name= 'Cascade'),
-    
+ 	path(r'addition/',views.additionop,name='Addition'),
+ 	path(r'subtraccion/',views.subtraccionop,name='Subtraccion')
 ]

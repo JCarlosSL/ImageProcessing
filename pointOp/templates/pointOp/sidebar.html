@@ -1,0 +1,97 @@
+
+
+    <!--<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">-->
+
+      <!-- Sidebar - Brand -->
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'index' %}">
+        <div class="sidebar-brand-icon">
+          <i class="fab fa-gripfire"></i>
+        </div>
+        <div class="sidebar-brand-text mx-8">IMAGE PROCESSING</div>
+      </a>
+
+      <!-- Divider -->
+      <hr class="sidebar-divider my-0">
+
+      <!-- Nav Item - Grayscale -->
+      <a class="nav-item active">
+        <a class="nav-link" href="{% url 'index' %}">
+          <i class="fas fa-fw fa-star-half-alt"></i>
+          <span>Original</span></a>
+      </a> | 
+
+      <!-- Nav Item - Seek -->
+      <a class="nav-item active">
+        <a class="nav-link" href="{% url 'thresholding' %}">
+          <i class="fas fa-fw fa-search"></i>
+          <span>Thresholding</span></a>
+      </a> |
+
+      <!-- Nav Item - Rotate -->
+      <a class="nav-item active">
+        <a class="nav-link" href="{% url 'contrastStretching' %}">
+          <i class="fas fa-fw fa-redo"></i>
+          <span>contrast Stretching</span></a>
+      </a> |
+
+      <!-- Nav Item - Flip -->
+      <a class="nav-item active">
+        <a class="nav-link" href="{% url 'HistogramEqualizer' %}">
+          <i class="fas fa-fw fa-sync-alt"></i>
+          <span>Histogram Equalizer</span></a>
+      </a> |
+
+      <!-- Nav Item - Crop -->
+      <a class="nav-item active">
+        <a class="nav-link" href="{% url 'logarithmOperator' %}">
+          <i class="fas fa-fw fa-crop-alt"></i>
+          <span>Logarithm Operator</span></a>
+      </a> |
+
+      <!-- Nav Item - Scale -->
+      <a class="nav-item active">
+        <a class="nav-link" href="{% url 'raizOperator' %}">
+          <i class="fab fa-quinscape"></i>
+          <span>Raiz Operator</span></a>
+      </a> |
+
+      <!-- Nav Item - Invert -->
+      <a class="nav-item active">
+        <a class="nav-link" href="{% url 'exponentialOperator' %}">
+          <i class="fas fa-fill-drip"></i>
+          <span>Exponential Operator</span></a>
+      </a> |
+      
+      <a class="nav-item active">
+        <a class="nav-link" href="{% url 'Raize Power Operator' %}">
+          <i class="fas fa-fill-drip"></i>
+          <span>Raiz Power Operator</span></a>
+      </a> |
+      
+      <a class="nav-item active">
+        <a class="nav-link" href="{% url 'Addition' %}">
+          <i class="fas fa-fill-drip"></i>
+          <span>Addition Operator</span></a>
+      </a> |
+      
+      <a class="nav-item active">
+        <a class="nav-link" href="{% url 'Subtraccion' %}">
+          <i class="fas fa-fill-drip"></i>
+          <span>Subtraccion Operator</span></a>
+      </a> |
+      
+      <a class="nav-item active">
+        <a class="nav-link" href="{% url 'Cascade' %}">
+          <i class="fas fa-fill-drip"></i>
+          <span>Cascade</span></a>
+      </a> |
+
+      <!-- Divider -->
+      <hr class="sidebar-divider d-none d-md-block">
+
+      <!-- Sidebar Toggler (Sidebar) -->
+      <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+      </div>
+
+    <!--/ul-->

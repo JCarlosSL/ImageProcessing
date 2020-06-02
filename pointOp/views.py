@@ -14,6 +14,8 @@ from .Lab2.contrastStretching import ConstS as CS
 from .LogarithmOperator.pointOperator import pointOperator as PO
 from .Threasholding.th import Threshold as TH
 from .OperadorExponencial.OpExp import pointOperator as POO
+from .Sustraccion.subtraccion import subtraccion as SO
+from .Addition.Addition import AdditionOperator as AO
 # Create your views here.
 
 def index(request):
@@ -281,6 +283,96 @@ def raizepoweroperator(request):
 
         displayFile = url
         displayFileMod = "/media/raize_"+name
+        return render(request, 'pointOp/home.html', {
+            'pageStatus':pageStatus,
+            'displayFileMod':displayFileMod,
+            'pageTitle':pageTitle,
+            'displayFile':displayFile
+            })
+    return render(request, 'pointOp/home.html', {
+        'pageStatus':pageStatus,
+        'pageTitle':pageTitle,
+        })
+        
+def additionop(request):
+    pageTitle = 'Addition Operator'
+    pageStatus = 5
+    if request.method == 'POST':
+        uploaded_file = request.FILES['imagefile']
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name, uploaded_file)
+        url = fs.url(name)
+        displayFile = os.path.join("/home/carlos/Documentos/ImageProcessing"+url)
+        img = cv2.imread(displayFile,0)
+        cv2.imwrite("pointOp/static/media/"+name,img)
+
+        """subtraccion Operator"""
+        sub = AO(img)
+        if request.POST['limit_a']:
+            r = request.POST['limit_a']
+            sub = AO(img)
+            newimg=sub.additionC(int(r))
+        
+        if 'imageb' in request.FILES:
+            uploadimg = request.FILES['imageb']
+            fs1 = FileSystemStorage()
+            name1 = fs1.save(uploadimg.name, uploadimg)
+            url1 = fs1.url(name1)
+            displayFile1 = os.path.join("/home/carlos/Documentos/ImageProcessing"+url1)
+            img1 = cv2.imread(displayFile1,0)
+            img = cv2.resize(img,dsize=(img1.shape[0],img1.shape[1]))
+            sub = AO(img)
+            newimg=sub.additionImg(img1)
+            
+        cv2.imwrite("pointOp/static/media/add_"+name,newimg)
+
+        displayFile = url
+        displayFileMod = "/media/add_"+name
+        return render(request, 'pointOp/home.html', {
+            'pageStatus':pageStatus,
+            'displayFileMod':displayFileMod,
+            'pageTitle':pageTitle,
+            'displayFile':displayFile
+            })
+    return render(request, 'pointOp/home.html', {
+        'pageStatus':pageStatus,
+        'pageTitle':pageTitle,
+        })
+        
+def subtraccionop(request):
+    pageTitle = 'Subtraccion Operator'
+    pageStatus = 5
+    if request.method == 'POST':
+        uploaded_file = request.FILES['imagefile']
+        fs = FileSystemStorage()
+        name = fs.save(uploaded_file.name, uploaded_file)
+        url = fs.url(name)
+        displayFile = os.path.join("/home/carlos/Documentos/ImageProcessing"+url)
+        img = cv2.imread(displayFile,0)
+        cv2.imwrite("pointOp/static/media/"+name,img)
+
+        """subtraccion Operator"""
+        sub = SO(img)
+        if request.POST['limit_a']:
+            r = request.POST['limit_a']
+            sub = SO(img)
+            newimg=sub.subtraccionC(int(r))
+        
+        if 'imageb' in request.FILES:
+            uploadimg = request.FILES['imageb']
+            fs1 = FileSystemStorage()
+            name1 = fs1.save(uploadimg.name, uploadimg)
+            url1 = fs1.url(name1)
+            displayFile1 = os.path.join("/home/carlos/Documentos/ImageProcessing"+url1)
+            img1 = cv2.imread(displayFile1,0)
+
+            sub = SO(img)
+            newimg=sub.subtraccionImg(img1);
+        
+        cv2.imwrite("pointOp/static/media/sub_"+name,newimg)
+
+        displayFile = url
+        displayFileMod = "/media/sub_"+name
         return render(request, 'pointOp/home.html', {
             'pageStatus':pageStatus,
             'displayFileMod':displayFileMod,
